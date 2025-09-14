@@ -1,18 +1,39 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.core import serializers
 from main.models import Product
+from main.forms import ProductForm
 
 # Create your views here.
 
 def show_main(request):
+    productList = Product.objects.all()
     context =  {
         'appName': "Jaa Soccer",
         'name': "Mirza Radithya Ramadhana",
         'npm': 2406405563,
-        'class': "PBP B"
+        'class': "PBP B",
+        'productList': productList
     }
     return render(request, "main.html", context)
+
+def create_product(request):
+    form = ProductForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return redirect('main:show_main')
+
+    context = {'form': form}
+    return render(request, "create_product.html", context)
+
+def show_product(request, id):
+    product = get_object_or_404(Product, pk=id)
+    context = {
+        'product': product
+    }
+    return render(request, "product_detail.html", context)
+
 
 def show_xml(request):
     productList = Product.objects.all()

@@ -1,3 +1,5 @@
+ {% extends 'base.html' %}
+ {% block content %}
 <h1>{{ appName }}</h1>
 
 <h5>NPM: </h5>
@@ -6,3 +8,31 @@
 <p>{{ name }}<p>
 <h5>Class: </h5>
 <p>{{ class }}</p>
+
+<a href="{% url 'main:create_product' %}">
+    <button>+ Add Product</button>
+</a>
+
+<hr>
+
+{% if not productList %}
+<p>Belum ada produk yang dijual pada toko Jaa Soccer.</p>
+{% else %}
+
+{% for product in productList %}
+<div>
+    <a href="{% url 'main:show_product' product.id %}">
+        {% if product.thumbnail %}
+        <img src="{{ product.thumbnail }}" alt="thumbnail" width="150" height="100">
+        {% endif %}
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.price }}</p>
+    </a>
+    <a href="{% url 'main:show_product' product.id %}">
+        <button>Detail</button>
+    </a>
+</div>
+<hr>
+{% endfor %}
+{% endif %}
+{% endblock content %}
