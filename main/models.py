@@ -1,13 +1,22 @@
 from django.db import models
-
+import uuid
 # Create your models here.
 
 class Product(models.Model):
+    CATEGORY_CHOICES = [
+        ('jersey', 'Jersey'),
+        ('boots', 'Football Boots'),
+        ('ball', 'Football'),
+        ('accessories', 'Accessories'),
+        ('training', 'Training Equipment'),
+        ('merchandise', 'Merchandise'),
+    ]
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     price = models.IntegerField()
     description = models.TextField()
     thumbnail = models.URLField()
-    category = models.CharField(max_length=255)
+    category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, default='jersey')
     is_featured = models.BooleanField()
     stock = models.IntegerField(default=0)
 

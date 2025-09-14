@@ -24,12 +24,18 @@ def show_json(request):
     jsonData = serializers.serialize("json", productList)
     return HttpResponse(jsonData, content_type="application/json")
 
-def show_xml(request, id):
-    product = Product.objects.filter(pk=id)
-    xmlData = serializers.serialize("xml", product)
-    return HttpResponse(xmlData, content_type="application/xml")
+def show_xml_by_id(request, id):
+    try:
+        product = Product.objects.filter(pk=id)
+        xmlData = serializers.serialize("xml", product)
+        return HttpResponse(xmlData, content_type="application/xml")
+    except Product.DoesNotExist:
+        return HttpResponse(status=404)
 
-def show_json(request, id):
-    productList = Product.objects.filter(pk=id)
-    jsonData = serializers.serialize("json", productList)
-    return HttpResponse(jsonData, content_type="application/json")
+def show_json_by_id(request, id):
+    try:
+        productList = Product.objects.filter(pk=id)
+        jsonData = serializers.serialize("json", productList)
+        return HttpResponse(jsonData, content_type="application/json")
+    except Product.DoesNotExist:
+        return HttpResponse(status=404)
