@@ -4,6 +4,35 @@ Kelas           : PBP B
 Tautan PWS      : https://mirza-radithya-jaasoccer.pbp.cs.ui.ac.id/
 Tautan GitHub   : https://github.com/JaaTzy14/jaa-soccer
 
+Tugas 3
+1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+    Data delivery penting agar kita bisa mengirimkan data pada database di server kepada client yang ingin mengakses data tersebut. Tanpa data delivery, semua data yang ada di data base .tidak bisa dimanfaatkan oleh client.
+
+2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+    Menurut saya, JSON lebih baik dari pada XML. Saya lebih menyukai JSON karena ukuran file JSON yang cenderung lebih kecil daripada XML. Selain itu, menurut saya file JSON lebih mudah dibaca dinandingkan dengan XML. JSON juga lebih cepat diproses oleh mesin karena formatnya yang sudaah didesain untuk struktur data di banyak bahasa pemrograman, khususnya JavaScript. Hal-hal tersebut juga merupakan alasan mengapa JSON lebih populer dibandingkan XML.
+
+3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+    Fungsi tersebut akan mengecek apakah form yang diisi sudah sesuai dengan aturan yang ditentukan, seperti tipe data ataupun panjang maksimal..Jika data yang diisi pada form tidak sesuai, maka fungsi tersebut akan mereturn False. Jika data yang diisi sudah sesuai, maka fungsi akan mereturn nilai True. Jadi, kita membutuhkan method tersebut agar kita bisa memastikan bahwa form yang diisi oleh client sudah sesuai dengan aturan yang kita buat sebelum diproses ke database.
+
+4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+    Kita membutuhkan csrf_token di django agar web kita terlindungi dari Cross-Site Request Forgery. Jika kita tidak menggunakan csrf_token, maka web kita rentan untuk terkena Cross-Site Request Forgery. Cross-Site Request Forgery adalah penyerangan dimana website penyerang akan memanfaatkan celah untuk berpura-pura menjadi suatu client untuk melakukan tindakan-tindakan yang seharusnya tidak bisa dilakukan oleh penyerang. csrf_token dapat mencegah penyerang melakukan itu karena token itu akan menjadi identitas unik untuk memastikan bahwa permintaan berasal langsung dari client.
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+    - Checklist 1: Tambahkan 4 fungsi views baru untuk melihat objek yang sudah ditambahkan dalam format XML, JSON, XML by ID, dan JSON by ID.
+        Saya membuat empat buah fungsi, yaitu show_json, show_xml, show_json_by_id, dan show_xml_by_id. Pada fungsi show_json dan show_xml saya mengambil semua data pada database dan menggunakan serializers untuk mengubah data tersebut ke format JSON atau XML. Setelah itu, saya mereturn httpResponse pada kedua fungsi tersebut agar bisa menampilkan data JSON atau XML nya ke client. Pada fungsi show_json_by_id dan show_xml_by_id, saya melakukan hal yang sama, tetapi saya menambahkan parameter id pada kedua fungsi tersebut dan mengambil data pada database berdasarkan id object. Jika objek tidak ditemukan, fungsi akan mereturn 404 not found.
+    - Checklist 2: Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 1.
+        Saya mengimpor semua fungsi yang sudah saya buat pada checklist 1 ke urls.py dan saya menambahkan konfigurasi URL dengan menggunakan path() ke fungsi yang sesuai serta memberi nama-nama yang sesuai, seperti path('json<str:id>', show_json_by_id, name='show_json_by_id'). Dengan begitu, setiap alamat URL dipetakan ke fungssi views yang sesuai sehingga client bisa mengakses dengan mudah.
+    - Checklist 3: Membuat halaman yang menampilkan data objek model yang memiliki tombol "Add" yang akan redirect ke halaman form, serta tombol "Detail" pada setiap data objek model yang akan menampilkan halaman detail objek.
+        Saya membuat fungsi create_product dan show_product pada views.py. Setelah itu saya melakukan routing terhadap fungsi tersebut pada urls.py. Setelah itu, saya memodifikasi main.html agar bisa menampilkan button "Add" yang menuju ke fungsi create_product dan button "Detail" yang menuju ke fungsi show_product. Saya menambahkan parameter id pada fungsi show_product agar fungsi bisa mengambil objek model berdasarkan id yang direquest oleh client.
+    - Checklist 4: Membuat halaman form untuk menambahkan objek model pada app sebelumnya.
+        Saya membuat file create_product.html yang terhubung dengan fungsi create_product pada views.py. Saya memodifikasi HTML nya agar bisa membentuk form yang nantinya dapat dikirimkan untuk membuat objek model.
+    - Checklist 5: Membuat halaman yang menampilkan detail dari setiap data objek model.
+        Saya membuat file product_detail.html yang terhubung dengan fungsi show_product pada views.py. Saya memodifikasi HTML nya agar bisa menampilkan setaip detail yang dimiliki oleh objek modek yang direquest oleh client.
+
+
+6. Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
+    Tidak ada.
+
 Tugas 2
 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
     - Checklist 1: Membuat sebuah proyek Django baru.
