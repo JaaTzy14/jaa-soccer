@@ -33,6 +33,13 @@ Tugas 3
 6. Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
     Tidak ada.
 
+7. SS Postman
+![XML](images/XML.png)
+![JSON](images/JSON.png)
+![JSON by ID](images/JSONbyID.png)
+![XML by ID](images/XMLbyID.png)
+
+
 Tugas 2
 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
     - Checklist 1: Membuat sebuah proyek Django baru.
