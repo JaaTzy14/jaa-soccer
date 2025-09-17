@@ -10,5 +10,10 @@
 <p><strong>Featured:</strong> {% if product.is_featured %}Yes{% else %}No{% endif %}</p>
 <h2>Description</h2>
 <p>{{ product.description }}</p>
+{% if product.user %}
+    <p>Seller: {{ product.user.username }}</p>
+{% else %}
+    <p>Seller: Anonymous</p>
+{% endif %}
 <p><a href="{% url 'main:show_main' %}">Back to Products List</a></p>
 {% endblock content %}

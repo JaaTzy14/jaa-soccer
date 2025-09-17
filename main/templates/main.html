@@ -17,10 +17,23 @@
   <button>Logout</button>
 </a>
 
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+
 <hr>
 
+<a href="?filter=all">
+    <button type="button">All Products</button>
+</a>
+<a href="?filter=my">
+    <button type="button">My Products</button>
+</a> 
+
 {% if not productList %}
-<p>Belum ada produk yang dijual pada toko Jaa Soccer.</p>
+{% if filter %}
+<p>Belum ada produk yang dijual pada toko {{ appName }}.</p>
+{% else %}
+<p>Belum ada produk yang kamu jual.</p>
+{% endif %}
 {% else %}
 
 {% for product in productList %}
