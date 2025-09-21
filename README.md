@@ -4,6 +4,32 @@ Kelas           : PBP B
 Tautan PWS      : https://mirza-radithya-jaasoccer.pbp.cs.ui.ac.id/
 Tautan GitHub   : https://github.com/JaaTzy14/jaa-soccer
 
+Tugas 4
+1. Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
+    Django AuthenticationForm adalah form yang dibuat oleh django untuk menangani proses login pengguna. Kelebihan dari form ini adalah kita tidak harus membuat form login dari awal, keamanan yang terjamin dengan csrf token, sudah otomatis sync dengan backend pada Django, dan sudah otomati memvalidasi input dari client. Kekurangannya adalah tampilan yang terlalu sederhana serta hanya mendukung metode login dengan username dan password.
+
+2. Apa perbedaan antara autentikasi dan otorisasi? Bagaiamana Django mengimplementasikan kedua konsep tersebut?
+    autentikasi adalah proses memverifikasi identitas pengguna, sedangkan otorisasi adalah proses menentukan apa yang dapat pengguna tersebut lakukan. Untuk melakukan autentikasi, Django menyediakan model User, fungsi login/logout, serta form untuk login (AuthenticationForm). Untuk melakukan otorisasi, Django punya sistem permission dan group yang bisa dikasih ke model User untuk menentukan apa yang bisa dilakukan user tersebut.
+
+3. Apa saja kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?
+    Cookies dapat menyimpan data state pada browser client, tetapi memiliki keterbatasan ukuran dan resiko keamanan karena datanya dapat diubah oleh pengguna. Sementara itu, session menyimpan data state pada server sehingga lebih aman dan dapat berukuran lebih besar, tetapi membutuhkan sumber daya server yang memadai.
+
+4. Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?
+    Penggunaan cookies tidak sepenuhnya aman. Terdapat serangan-serangan seperti CSRF, XSS, dan pencurian data melalui koneksi yang tidak terencrypt. Untuk menangani hal tersebut, Django menyediakan CSRF token untuk memastikan data dikirim oleh pengguna asli, dukungan secure agar cookie hanya terkirim melalui HTTPS, dan pengaturan atribut HttpOnly agar cookie tidak bisa diakses oleh JavaScript.
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+    - Checklist 1: Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna mengakses aplikasi sebelumnya sesuai dengan status login/logoutnya.
+        Saya membuat fungsi register,login_user, dan logout_user pada file views.py menggunakan form bawaan Django. Setelah itu, saya melakukan routing terhadap ketiga fungsi tersebut pada urls.py. Saya juga membuat file html baru  bernama register.html untuk menampilkan menu register dan login.html untuk menampilkan menu login. Saya juga membuat fungsi show_main dan show_product agar hanya dapat diakses oleh user yang sudah login dengan menambahkan property @login_required pada kedua fungsi tersebut.
+
+    - Checklist 2: Membuat dua (2) akun pengguna dengan masing-masing tiga (3) dummy data menggunakan model yang telah dibuat sebelumnya untuk setiap akun di lokal.
+        Saya buat dua akun dan menambahkan 3 dummy data pada masing-masing akun.
+    
+    - Checklist 3: Menghubungkan model Product dengan User.
+        Saya menambahkan field User pada model Product, sehingga product yang dibuat memiliki field User yang berisi user yang membuat produk tersebut.
+    
+    - Checklist 4: Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan cookies seperti last_login pada halaman utama aplikasi.
+        Saya menaruh request.user pada context di show_main, sehingga ketika user mengakses main, request.user akan dipassing ke fungsi render bersamaan dengan context. Saya juga menaruh request.COOKIES.get('last_login', 'Never') untuk mempassing data last login dari cookies. Jika data last login tidak ada maka string 'never' akan dipassing. cookies last_login saya set pada fungsi login_user dan akan di delete pada fungsi logout_user. Untuk menampilkan datanya pada halaman utama, saya mengedit main.html dan menambahkan tag Django seperti {{ last_login }} untuk menampilkan informasi last_login.
+
 Tugas 3
 1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
     Data delivery penting agar kita bisa mengirimkan data pada database di server kepada client yang ingin mengakses data tersebut. Tanpa data delivery, semua data yang ada di data base .tidak bisa dimanfaatkan oleh client.
