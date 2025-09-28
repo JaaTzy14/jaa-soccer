@@ -1,19 +1,55 @@
 {% extends 'base.html' %}
 {% block content %}
-{% if product.thumbnail %}
-<img src="{{ product.thumbnail }}" alt="{{ product.name }}" width="150" height="100">
-{% endif %}
-<h1>{{ product.name }}</h1>
-<p><strong>Price:</strong> IDR {{ product.price }}</p>
-<p><strong>Category:</strong> {{ product.get_category_display }}</p>
-<p><strong>Stock:</strong> {{ product.stock }}</p>
-<p><strong>Featured:</strong> {% if product.is_featured %}Yes{% else %}No{% endif %}</p>
-<h2>Description</h2>
-<p>{{ product.description }}</p>
-{% if product.user %}
-    <p>Seller: {{ product.user.username }}</p>
-{% else %}
-    <p>Seller: Anonymous</p>
-{% endif %}
-<p><a href="{% url 'main:show_main' %}">Back to Products List</a></p>
+<div class="bg-[#f9fafb] w-full min-h-screen">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Navigasi kembali -->
+        <div class="mb-6">
+            <a href="{% url 'main:show_main' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+                ← Back to Home
+            </a>
+        </div>
+
+        <div class="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 form-style space-y-6">
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <!-- Gambar -->
+                <div class="flex items-center justify-center bg-gray-100 rounded-lg p-4">
+                    <img src="{{ product.thumbnail }}" 
+                        alt="{{ product.name }}" 
+                        class="max-h-96 w-auto object-contain" />
+                </div>
+
+                <!-- Detail -->
+                <div class="flex flex-col space-y-4 w-full">
+                    <div class="flex space-x-2">
+                        <span class="inline-flex items-center px-3 py-2 rounded-md text-xs font-medium bg-[#2563eb] text-white">
+                            {{ product.get_category_display }}
+                        </span>
+                        {% if product.is_featured %}
+                            <span class="inline-flex items-center px-3 py-2 rounded-md text-xs font-medium bg-[#172554] text-white">
+                                Featured
+                            </span>
+                        {% endif %}
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ product.name }}</h1>
+                    <p class="text-2xl font-semibold text-gray-900 mb-6">IDR {{ product.price }}</p>
+                    <p class="text-sm text-gray-500">
+                        Stock: <span class="font-medium text-gray-700">{{ product.stock }}</span>
+                    </p>
+                    {% if product.user %}
+                        <p class="text-sm text-gray-500">
+                            Seller: 
+                            <span class="font-medium text-gray-700">{{ product.user.username }}</span>
+                        </p>
+                    {% else %}
+                        <p class="text-sm text-gray-500">
+                            Seller: 
+                            <span class="font-medium text-gray-700">Anonymous</span>
+                        </p>
+                    {% endif %}
+                    <p class="text-gray-600 mb-6">{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

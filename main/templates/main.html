@@ -1,55 +1,81 @@
- {% extends 'base.html' %}
- {% block content %}
-<h1>{{ appName }}</h1>
+{% extends 'base.html' %}
+{% load static %}
 
-<h5>NPM: </h5>
-<p>{{ npm }}</p>
-<h5>Name: </h5>
-<p>{{ name }}<p>
-<h5>Class: </h5>
-<p>{{ class }}</p>
+{% block meta %}
+<title>Jaa Soccer</title>
+{% endblock meta %}
 
-<a href="{% url 'main:create_product' %}">
-    <button>+ Add Product</button>
-</a>
+{% block content %}
+{% include 'navbar.html' %}
+<main class="pt-16">
+    <div class="bg-[#f9fafb] w-full min-h-screen">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header Section -->
+            <header class="bg-[#f9fafb] mb-2">
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-4">
+                    Welcome to <span class="text-[#2563eb]">Jaa Soccer</span>
+                </h1>
+                <p class="text-gray-600 max-w-2xl">
+                    Your favorite shop for football gear, from jerseys to boots. Get the best, play your best.
+                </p>
+                {% if user.is_authenticated %}
+                    <div class="text-sm text-gray-500 mt-4 sm:mt-0">
+                        Last login: {{ last_login }}
+                    </div>
+                {% endif %}
+            </header>
 
-<a href="{% url 'main:logout' %}">
-  <button>Logout</button>
-</a>
+            <!-- Filter Section -->
+            <div class="mb-8 bg-white rounded-lg border border-gray-200 p-4">
+                <div class="flex space-x-3 overflow-x-auto scrollbar-hide pb-2 lg:pb-0">
+                    <a href="?" class="{% if request.GET.filter == 'all' or not request.GET.filter %} bg-[#2563eb] text-white {% else %} bg-white text-gray-700 border border-gray-300 {% endif %} px-4 py-2 rounded-md font-medium whitespace-nowrap text-center transition-colors hover:bg-[#2563eb] hover:text-white">
+                        All Product
+                    </a>
+                    <a href="?filter=jersey" class="{% if request.GET.filter == 'jersey' %} bg-[#2563eb] text-white {% else %} bg-white text-gray-700 border border-gray-300 {% endif %} px-4 py-2 rounded-md font-medium whitespace-nowrap text-center transition-colors hover:bg-[#2563eb] hover:text-white">
+                        Jersey
+                    </a>
+                    <a href="?filter=boots" class="{% if request.GET.filter == 'boots' %} bg-[#2563eb] text-white {% else %} bg-white text-gray-700 border border-gray-300 {% endif %} px-4 py-2 rounded-md font-medium whitespace-nowrap text-center transition-colors hover:bg-[#2563eb] hover:text-white">
+                        Boots
+                    </a>
+                    <a href="?filter=ball" class="{% if request.GET.filter == 'ball' %} bg-[#2563eb] text-white {% else %} bg-white text-gray-700 border border-gray-300 {% endif %} px-4 py-2 rounded-md font-medium whitespace-nowrap text-center transition-colors hover:bg-[#2563eb] hover:text-white">
+                        Ball
+                    </a>
+                    <a href="?filter=accessories" class="{% if request.GET.filter == 'accessories' %} bg-[#2563eb] text-white {% else %} bg-white text-gray-700 border border-gray-300 {% endif %} px-4 py-2 rounded-md font-medium whitespace-nowrap text-center transition-colors hover:bg-[#2563eb] hover:text-white">
+                        Accessories
+                    </a>
+                    <a href="?filter=training" class="{% if request.GET.filter == 'training' %} bg-[#2563eb] text-white {% else %} bg-white text-gray-700 border border-gray-300 {% endif %} px-4 py-2 rounded-md font-medium whitespace-nowrap text-center transition-colors hover:bg-[#2563eb] hover:text-white">
+                        Training Equipment
+                    </a>
+                    <a href="?filter=merchandise" class="{% if request.GET.filter == 'merchandise' %} bg-[#2563eb] text-white {% else %} bg-white text-gray-700 border border-gray-300 {% endif %} px-4 py-2 rounded-md font-medium whitespace-nowrap text-center transition-colors hover:bg-[#2563eb] hover:text-white">
+                        Merchandise
+                    </a>
+                    {% if user.is_authenticated %}
+                        <a href="?filter=my" class="{% if request.GET.filter == 'my' %} bg-[#2563eb] text-white {% else %} bg-white text-gray-700 border border-gray-300 {% endif %} px-4 py-2 rounded-md font-medium whitespace-nowrap text-center transition-colors hover:bg-[#2563eb] hover:text-white">
+                            My Product
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
 
-<h5>Sesi terakhir login: {{ last_login }}</h5>
-
-<hr>
-
-<a href="?filter=all">
-    <button type="button">All Products</button>
-</a>
-<a href="?filter=my">
-    <button type="button">My Products</button>
-</a> 
-
-{% if not productList %}
-{% if filter %}
-<p>Belum ada produk yang dijual pada toko {{ appName }}.</p>
-{% else %}
-<p>Belum ada produk yang kamu jual.</p>
-{% endif %}
-{% else %}
-
-{% for product in productList %}
-<div>
-    <a href="{% url 'main:show_product' product.id %}">
-        {% if product.thumbnail %}
-        <img src="{{ product.thumbnail }}" alt="thumbnail" width="150" height="100">
-        {% endif %}
-        <h2>{{ product.name }}</h2>
-        <p>IDR {{ product.price }}</p>
-    </a>
-    <a href="{% url 'main:show_product' product.id %}">
-        <button>Detail</button>
-    </a>
-</div>
-<hr>
-{% endfor %}
-{% endif %}
+            {% if not productList %}
+                <div class="bg-white rounded-lg border border-gray-200 p-12 text-center">
+                    <div class="w-32 h-32 mx-auto mb-4">
+                        <img src="{% static 'image/no-products.png' %}" alt="No products available" class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-800 mb-2">No products available</h3>
+                    <p class="text-gray-600 mb-6">Add your product!</p>
+                    <a href="{% url 'main:create_product' %}" class="inline-flex items-center px-4 py-2 bg-[#2563eb] text-white rounded-md hover:bg-[#1e40af] transition-colors">
+                        Add Product
+                    </a>
+                </div>
+            {% else %}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for product in productList %}
+                        {% include 'card_product.html' with product=product %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</main>
 {% endblock content %}
