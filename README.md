@@ -4,6 +4,42 @@ Kelas           : PBP B
 Tautan PWS      : https://mirza-radithya-jaasoccer.pbp.cs.ui.ac.id/
 Tautan GitHub   : https://github.com/JaaTzy14/jaa-soccer
 
+Tugas 5
+1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!<br>
+&emsp;1. Inline Style (style="")
+&emsp;2. ID Selector (#id)
+&emsp;3. Class, Attribute, Pseudo-class (.class, [type="text"], :hover)
+&emsp;4. Element, Pseudo-element (div, ::before)
+<br>
+
+2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!<br>
+&emsp;Responsive design penting agar pengguna yang mengakses dari berbagai ukuran device, dapat mengakses web dengan nyaman. Contoh aplikasi yang sudah menerapkan responsive design adalah youtube. Ketika kita mengakses youtube dari layar yang besar dan layar yang kecil, tampilannya akan berbeda menyesuaikan ukuran layar. Contoh aplikasi yang belum responsive adalah https://dequeuniversity.com/library/responsive/1-non-responsive dimana ketika kita buka dari layar yang kecil, tampilannya akan terpotong-potong.<br>
+
+3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!<br>
+&emsp;Margin adalah jarak dari suatu elemen ke elemen lain. Border adalah garis pembatas pada elemen. Padding adalah jarak antara konten dalam elemen dan border. Untuk mengimplementasikannya, kita cukup membuat css dengan isi<br>
+&emsp;div {<br>
+&emsp;&emsp;margin: 10px;<br>
+&emsp;&emsp;border: 2px solid black;<br>
+&emsp;&emsp;padding: 5px;<br>
+&emsp;}<br>
+&emsp;dimana margin akan diset sejauh 10px, border setebal 2px dengan model solid dan warna hitam, serta padding sejauh 5px.<br>
+
+4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!<br>
+&emsp;1. Flexbox<br>
+&emsp;&emsp;Flexbox adalah cara mengatur elemen pada html agar sejajar dalam satu baris/kolom. Flexbox dapat berguna untuk membuat menu horizontal/vertikal. Kita juga bisa mengatur jarak antar elemennya. Elemen juga bisa dipusatkan, disejajarkan, atau disebarkan.<br>
+&emsp;2. Grid<br>
+&emsp;&emsp;Grid adalah cara mengatur elemen pada html agar dapat berbentuk seperti layout 2 dimensi dengan baris dan kolom. Kita bisa membuat layout kompleks menggunakan grid. Ukuran masing2 kolom dan baris juga dapat diatur. Grid juga mempunyai fitur auto-fit dan auto-fill yang membuat design lebih responsive.<br>
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+    - Kustomisasi halaman login, register, tambah product, edit product, dan detail product semenarik mungkin.
+
+    -  Kustomisasi halaman daftar product menjadi lebih menarik dan responsive.
+
+    - Untuk setiap card product, buatlah dua buah button untuk mengedit dan menghapus product pada card tersebut!
+
+    - Buatlah navigation bar (navbar) untuk fitur-fitur pada aplikasi yang responsive terhadap perbedaan ukuran device, khususnya mobile dan desktop.
+ 
+
 Tugas 4
 1. Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
     Django AuthenticationForm adalah form yang dibuat oleh django untuk menangani proses login pengguna. Kelebihan dari form ini adalah kita tidak harus membuat form login dari awal, keamanan yang terjamin dengan csrf token, sudah otomatis sync dengan backend pada Django, dan sudah otomati memvalidasi input dari client. Kekurangannya adalah tampilan yang terlalu sederhana serta hanya mendukung metode login dengan username dan password.
