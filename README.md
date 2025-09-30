@@ -6,11 +6,10 @@ Tautan GitHub   : https://github.com/JaaTzy14/jaa-soccer
 
 Tugas 5
 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!<br>
-&emsp;1. Inline Style (style="")
-&emsp;2. ID Selector (#id)
-&emsp;3. Class, Attribute, Pseudo-class (.class, [type="text"], :hover)
-&emsp;4. Element, Pseudo-element (div, ::before)
-<br>
+&emsp;1. Inline Style (style="")<br>
+&emsp;2. ID Selector (#id)<br>
+&emsp;3. Class, Attribute, Pseudo-class (.class, [type="text"], :hover)<br>
+&emsp;4. Element, Pseudo-element (div, ::before)<br>
 
 2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!<br>
 &emsp;Responsive design penting agar pengguna yang mengakses dari berbagai ukuran device, dapat mengakses web dengan nyaman. Contoh aplikasi yang sudah menerapkan responsive design adalah youtube. Ketika kita mengakses youtube dari layar yang besar dan layar yang kecil, tampilannya akan berbeda menyesuaikan ukuran layar. Contoh aplikasi yang belum responsive adalah https://dequeuniversity.com/library/responsive/1-non-responsive dimana ketika kita buka dari layar yang kecil, tampilannya akan terpotong-potong.<br>
@@ -22,7 +21,7 @@ Tugas 5
 &emsp;&emsp;border: 2px solid black;<br>
 &emsp;&emsp;padding: 5px;<br>
 &emsp;}<br>
-&emsp;dimana margin akan diset sejauh 10px, border setebal 2px dengan model solid dan warna hitam, serta padding sejauh 5px.<br>
+dimana margin akan diset sejauh 10px, border setebal 2px dengan model solid dan warna hitam, serta padding sejauh 5px.<br>
 
 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!<br>
 &emsp;1. Flexbox<br>
