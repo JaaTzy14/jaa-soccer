@@ -10,6 +10,9 @@ Tugas 5
 &emsp;2. ID Selector (#id)<br>
 &emsp;3. Class, Attribute, Pseudo-class (.class, [type="text"], :hover)<br>
 &emsp;4. Element, Pseudo-element (div, ::before)<br>
+&emsp;Tambahan:
+&emsp;- Elemen yang memiliki tag !important akan didahulukan
+&emsp;- Jika tie, maka akan diambil yang paling terakhir
 
 2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!<br>
 &emsp;Responsive design penting agar pengguna yang mengakses dari berbagai ukuran device, dapat mengakses web dengan nyaman. Contoh aplikasi yang sudah menerapkan responsive design adalah youtube. Ketika kita mengakses youtube dari layar yang besar dan layar yang kecil, tampilannya akan berbeda menyesuaikan ukuran layar. Contoh aplikasi yang belum responsive adalah https://dequeuniversity.com/library/responsive/1-non-responsive dimana ketika kita buka dari layar yang kecil, tampilannya akan terpotong-potong.<br>
@@ -30,14 +33,11 @@ dimana margin akan diset sejauh 10px, border setebal 2px dengan model solid dan 
 &emsp;&emsp;Grid adalah cara mengatur elemen pada html agar dapat berbentuk seperti layout 2 dimensi dengan baris dan kolom. Kita bisa membuat layout kompleks menggunakan grid. Ukuran masing2 kolom dan baris juga dapat diatur. Grid juga mempunyai fitur auto-fit dan auto-fill yang membuat design lebih responsive.<br>
 
 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
-    - Kustomisasi halaman login, register, tambah product, edit product, dan detail product semenarik mungkin.
+    - Implementasikan fungsi untuk menghapus dan mengedit product.<br>
+    &emsp;Saya menambahkan fungsi delete_product dan edit_product pada views.py. Saya juga melakukan routing terhadap dua fungsi tersebut di urls.py. Saya juga membuat html bernama edit_product.html untuk halaman edit product.<br>
 
-    -  Kustomisasi halaman daftar product menjadi lebih menarik dan responsive.
-
-    - Untuk setiap card product, buatlah dua buah button untuk mengedit dan menghapus product pada card tersebut!
-
-    - Buatlah navigation bar (navbar) untuk fitur-fitur pada aplikasi yang responsive terhadap perbedaan ukuran device, khususnya mobile dan desktop.
- 
+    - Kustomisasi desain pada template HTML yang telah dibuat pada tugas-tugas sebelumnya menggunakan CSS atau CSS framework<br>
+    &emsp;Saya mengimpor css tailwind ke base.html dan juga saya membuat file css bernama global.css agar semua file html menerapkan styling dari situ. Pada halaman login, register, tambah product, dan edit product, saya hanya mengubah warna dari tutorial. Pada halaman product, saya menambahkan beberapa filter untuk barang seperti sepatu dan jersey. Saya juga membuat html baru bernama card_product.html untuk menampilkan produk pada halaman daftar product. Saya mengedit beberapa tombol dari tutorial dan warnanya. Saya juga membuat agar card menampilkan tombol edit/delete ketika user yang sedang login adalah user yang membuat product tersebut. Saya juga membuat html baru bernama navbar.html untuk menampilkan navigasi pada halaman daftar product dan tambah product. Saya membuat navigasinya responsive, jadi ketika user mengakses dari layar yang kecil, navigasi akan berubah menjadi tombol hamburger.<br>
 
 Tugas 4
 1. Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
