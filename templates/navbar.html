@@ -94,34 +94,36 @@
 <script>
 const logoutBtn = document.getElementById('logoutBtn');
 
-logoutBtn.addEventListener('click', async (e) => {
-e.preventDefault();
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', async (e) => {
+  e.preventDefault();
 
-try {
-    const response = await fetch("{% url 'main:logout_ajax' %}", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-        },
-    });
+  try {
+      const response = await fetch("{% url 'main:logout_ajax' %}", {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+          },
+      });
 
-    if (!response.ok) throw new Error('Logout failed');
+      if (!response.ok) throw new Error('Logout failed');
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.success) {
-        showToast('Success', 'You have been logged out!', 'success');
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 1000);
-    } else {
-        showToast('Error', data.message, 'error');
-    }
-} catch (err) {
-    console.error(err);
-    showToast('Error', 'Logout failed', 'error');
-}
+      if (data.success) {
+          showToast('Success', 'You have been logged out!', 'success');
+          setTimeout(() => {
+              window.location.href = '/';
+          }, 1000);
+      } else {
+          showToast('Error', data.message, 'error');
+      }
+  } catch (err) {
+      console.error(err);
+      showToast('Error', 'Logout failed', 'error');
+  }
 });
+}
   const btn = document.querySelector("button.mobile-menu-button");
   const menu = document.querySelector(".mobile-menu");
 
