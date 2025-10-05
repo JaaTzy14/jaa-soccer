@@ -9,47 +9,135 @@
             </a>
         </div>
 
-        <div class="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 form-style space-y-6">
+        <!-- Loading State -->
+        <div id="loadingDetail" class="bg-white rounded-lg border border-gray-200 p-12 text-center hidden">
+            <svg class="animate-spin h-8 w-8 text-[#2563eb] inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+            <p class="text-gray-600 mt-3">Loading products detail...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorDetail" class="bg-white rounded-lg border border-gray-200 p-12 text-center hidden">
+            <div class="w-16 h-16 mx-auto mb-4">
+                <div class="text-red-500 text-5xl">⚠️</div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Failed to load product</h3>
+            <p class="text-gray-500">Please try again later.</p>
+        </div>
+
+        <div id="productDetail" class="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 form-style space-y-6 hidden">
             <div class="grid md:grid-cols-2 gap-8 items-start">
                 <!-- Gambar -->
                 <div class="flex items-center justify-center bg-gray-100 rounded-lg p-4">
-                    <img src="{{ product.thumbnail }}" 
-                        alt="{{ product.name }}" 
+                    <img id="thumbnailDetail" src="" 
+                        alt="" 
                         class="max-h-96 w-auto object-contain" />
                 </div>
 
                 <!-- Detail -->
                 <div class="flex flex-col space-y-4 w-full">
                     <div class="flex space-x-2">
-                        <span class="inline-flex items-center px-3 py-2 rounded-md text-xs font-medium bg-[#2563eb] text-white">
-                            {{ product.get_category_display }}
+                        <span id="categoryDetail" class="inline-flex items-center px-3 py-2 rounded-md text-xs font-medium bg-[#2563eb] text-white">
+                            
                         </span>
-                        {% if product.is_featured %}
-                            <span class="inline-flex items-center px-3 py-2 rounded-md text-xs font-medium bg-[#172554] text-white">
-                                Featured
-                            </span>
-                        {% endif %}
+                        <span id="featuredDetail" class="inline-flex items-center px-3 py-2 rounded-md text-xs font-medium bg-[#172554] text-white hidden">
+                            Featured
+                        </span>
                     </div>
-                    <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ product.name }}</h1>
-                    <p class="text-2xl font-semibold text-gray-900 mb-6">IDR {{ product.price }}</p>
+                    <h1 id="nameDetail" class="text-3xl font-bold text-gray-800 mb-4"></h1>
+                    <p id="priceDetail" class="text-2xl font-semibold text-gray-900 mb-6"></p>
                     <p class="text-sm text-gray-500">
-                        Stock: <span class="font-medium text-gray-700">{{ product.stock }}</span>
+                        Stock: <span id="stockDetail" class="font-medium text-gray-700"></span>
                     </p>
-                    {% if product.user %}
-                        <p class="text-sm text-gray-500">
-                            Seller: 
-                            <span class="font-medium text-gray-700">{{ product.user.username }}</span>
-                        </p>
-                    {% else %}
-                        <p class="text-sm text-gray-500">
-                            Seller: 
-                            <span class="font-medium text-gray-700">Anonymous</span>
-                        </p>
-                    {% endif %}
-                    <p class="text-gray-600 mb-6">{{ product.description }}</p>
+                    <p class="text-sm text-gray-500">
+                        Seller: 
+                        <span id="sellerDetail" class="font-medium text-gray-700"></span>
+                    </p>
+                    <p id="descriptionDetail" class="text-gray-600 mb-6"></p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+// Configuration
+const PRODUCT_ID = "{{ product.id }}";
+const PRODUCT_DETAIL_ENDPOINT = `{% url 'main:show_json_by_id' '00000000-0000-0000-0000-000000000000' %}`.replace('00000000-0000-0000-0000-000000000000', PRODUCT_ID);
+
+// DOM Elements
+const loadingState = document.getElementById('loadingDetail');
+const errorState = document.getElementById('errorDetail');
+const productDetail = document.getElementById('productDetail');
+const thumbnail = document.getElementById('thumbnailDetail');
+const category = document.getElementById('categoryDetail');
+const featured = document.getElementById('featuredDetail');
+const name = document.getElementById('nameDetail');
+const price = document.getElementById('priceDetail');
+const stock = document.getElementById('stockDetail');
+const seller = document.getElementById('sellerDetail');
+const description = document.getElementById('descriptionDetail');
+
+// Show/hide page sections
+function showState(state) {
+    loadingState.classList.toggle('hidden', state !== 'loading');
+    errorState.classList.toggle('hidden', state !== 'error');
+    productDetail.classList.toggle('hidden', state !== 'ready');
+}
+
+// Get readable category name
+function getReadableCategoryName(categoryCode) {
+  const categoryMapping = {
+    jersey: 'Jersey',
+    boots: 'Football Boots',
+    ball: 'Football',
+    accessories: 'Accessories',
+    training: 'Training Equipment',
+    merchandise: 'Merchandise',
+  };
+  return categoryMapping[categoryCode] || categoryCode;
+}
+
+// Render article content
+function renderProduct(product) {
+    document.title = product.name + " | Jaa Soccer";
+    thumbnail.src = product.thumbnail;
+    thumbnail.alt = product.name;
+    category.textContent = getReadableCategoryName(product.category);
+    if (product.is_featured) {
+        featured.classList.remove('hidden');
+    }
+    name.textContent = product.name;
+    stock.textContent = String(product.stock);
+    description.textContent = product.description;
+    seller.textContent = product.user_username || 'Anonymous';
+    price.textContent = product.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+}
+
+// Fetch news detail
+async function loadProductDetail() {
+    try {
+        showState('loading');
+        
+        const response = await fetch(PRODUCT_DETAIL_ENDPOINT, {
+            headers: { 'Accept': 'application/json' },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch product detail');
+        }
+
+        const newsData = await response.json();
+        renderProduct(newsData);
+        showState('ready');
+    } catch (error) {
+        console.error('Error loading product detail:', error);
+        showState('error');
+    }
+}
+
+// Initialize page
+loadProductDetail();
+</script>
 {% endblock content %}
