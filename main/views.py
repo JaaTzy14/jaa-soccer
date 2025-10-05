@@ -11,6 +11,7 @@ import datetime
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
 
 # Create your views here.
 
@@ -169,6 +170,8 @@ def add_product_entry_ajax(request):
     thumbnail = request.POST.get("thumbnail")
     is_featured = request.POST.get("is_featured") == 'on'  # checkbox handling
     user = request.user
+    name = strip_tags(name)
+    description = strip_tags(description)
 
     new_product = Product(
         name=name, 
@@ -198,6 +201,8 @@ def edit_product_entry_ajax(request, product_id):
     description = request.POST.get("description")
     thumbnail = request.POST.get("thumbnail")
     is_featured = request.POST.get("is_featured") == 'on'
+    name = strip_tags(name)
+    description = strip_tags(description)
     product.name = name
     product.category = category
     product.stock = stock

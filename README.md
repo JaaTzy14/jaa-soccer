@@ -4,6 +4,26 @@ Kelas           : PBP B
 Tautan PWS      : https://mirza-radithya-jaasoccer.pbp.cs.ui.ac.id/
 Tautan GitHub   : https://github.com/JaaTzy14/jaa-soccer
 
+Tugas 6
+1. Apa perbedaan antara synchronous request dan asynchronous request?<br>
+&emsp;Synchronous request akan menunggu sampai request selesai untuk menjalankan kode berikutnya, sementara asynchronous dapat mengeksekusi kode berikutnya selagi menunggu request selesai.<br>
+
+2. Bagaimana AJAX bekerja di Django (alur request–response)?<br>
+&emsp;User mengklik suatu tombol yang memiliki event listener. Lalu, java script membuat AJAX request dengan fetch. Setelah itu, request akan terkirim ke fungsi di views.py dan akan diolah di sana lalu dikembalikan ke java script. Setelah javascript menerima respons, halaman dapat berubah secara dinamis tanpa refresh halaman.<br>
+
+3. Apa keuntungan menggunakan AJAX dibandingkan render biasa di Django?
+    - Tidak perlu reload halaman untuk merubah tampilan
+    - Penglaman pengguna yang lebih nyaman
+    - Respons bisa lebih cepat, karna tidak merender ulang semua data
+
+4. Bagaimana cara memastikan keamanan saat menggunakan AJAX untuk fitur Login dan Register di Django?
+    - Menggunakan csrf token
+    - Menggunakan HTTPS
+    - Menggunakan validasi input tidak hanya di frontend, tetapi juga di server
+
+5. Bagaimana AJAX mempengaruhi pengalaman pengguna (User Experience) pada website?
+&emsp;Menurut saya, website bisa menjadi lebih responsif, respons lebih cepat, dan AJAX juga memungkinkan web untuk memberikan feedback realtime tanpa reload halaman seperti notifikasi toast sehingga pengalaman pengguna menjadi lebih nyaman.
+
 Tugas 5
 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!<br>
 &emsp;1. Inline Style (style="")<br>
