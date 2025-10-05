@@ -249,11 +249,13 @@ def login_ajax(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return JsonResponse({
+            response = JsonResponse({
                 'success': True,
                 'message': 'Login successful!',
                 'redirect_url': '/'
             })
+            response.set_cookie('last_login', str(datetime.datetime.now()))
+            return response
         else:
             return JsonResponse({
                 'success': False,
@@ -265,7 +267,10 @@ def login_ajax(request):
 def logout_ajax(request):
     if request.method == 'POST':
         logout(request)
-        return JsonResponse({'success': True})
+        response = JsonResponse({'success': True})
+        response.delete_cookie('last_login')
+        
+        return response
     return JsonResponse({'success': False, 'message': 'Invalid request'}, status=400)
 
 @csrf_exempt

@@ -27,9 +27,9 @@
                     <div class="text-sm font-medium text-gray-100">{{ name|default:user.username }}</div>
                     <div class="text-xs text-gray-400">{{ npm|default:"Student" }} - {{ class|default:"Class" }}</div>
                 </div>
-                <a id="logoutBtn" class="text-red-400 hover:text-red-500 font-medium transition-colors">
+                <button id="logoutBtn" class="text-red-400 hover:text-red-500 font-medium transition-colors">
                   Logout
-                </a>
+                </button>
             </div>
           {% else %}
             <a href="{% url 'main:login' %}" class="text-gray-200 hover:text-blue-400 font-medium transition-colors">
@@ -74,9 +74,9 @@
               <div class="font-medium text-gray-900">{{ name|default:user.username }}</div>
               <div class="text-sm text-gray-500">{{ npm|default:"Student" }} - {{ class|default:"Class" }}</div>
             </div>
-            <a href="{% url 'main:logout' %}" class="block text-red-600 hover:text-red-700 font-medium py-3 transition-colors">
-              Logout
-            </a>
+            <button id="logoutBtn" class="text-red-400 hover:text-red-500 font-medium transition-colors">
+                  Logout
+            </button>
           {% else %}
             <div class="space-y-3">
               <a href="{% url 'main:login' %}" class="block text-gray-700 hover:text-blue-600 font-medium py-3 transition-colors">
@@ -92,36 +92,40 @@
     </div>
   </nav>
 <script>
-const logoutBtn = document.getElementById('logoutBtn');
+const logoutBtns = document.querySelectorAll('#logoutBtn')
 
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', async (e) => {
-  e.preventDefault();
+if (logoutBtns) {
+  const logoutBtns = document.querySelectorAll('#logoutBtn'); // ambil semua tombol logout
 
-  try {
-      const response = await fetch("{% url 'main:logout_ajax' %}", {
-          method: 'POST',
-          headers: {
-              'Accept': 'application/json',
-          },
-      });
+logoutBtns.forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+        e.preventDefault();
 
-      if (!response.ok) throw new Error('Logout failed');
+        try {
+            const response = await fetch("{% url 'main:logout_ajax' %}", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            });
 
-      const data = await response.json();
+            if (!response.ok) throw new Error('Logout failed');
 
-      if (data.success) {
-          showToast('Success', 'You have been logged out!', 'success');
-          setTimeout(() => {
-              window.location.href = '/';
-          }, 1000);
-      } else {
-          showToast('Error', data.message, 'error');
-      }
-  } catch (err) {
-      console.error(err);
-      showToast('Error', 'Logout failed', 'error');
-  }
+            const data = await response.json();
+
+            if (data.success) {
+                showToast('Success', 'You have been logged out!', 'success');
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1000);
+            } else {
+                showToast('Error', data.message, 'error');
+            }
+        } catch (err) {
+            console.error(err);
+            showToast('Error', 'Logout failed', 'error');
+        }
+    });
 });
 }
   const btn = document.querySelector("button.mobile-menu-button");
