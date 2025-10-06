@@ -84,6 +84,25 @@
             <!-- Products Grid -->
             <div id="grid" class="hidden"></div>
 
+            <div id="deleteModal" class="hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+              <div class="bg-white rounded-lg shadow-lg p-6 w-80">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Confirm Delete</h2>
+                <p class="text-gray-600 mb-6">Are you sure you want to delete this product?</p>
+                <div class="flex justify-end space-x-3">
+                  <button 
+                    onclick="closeDeleteModal()" 
+                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">
+                    Cancel
+                  </button>
+                  <button 
+                    id="confirmDeleteBtn" 
+                    class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <!-- Empty State -->
             <div id="empty" class="bg-white rounded-lg border border-gray-200 p-12 text-center hidden">
                 <div class="w-32 h-32 mx-auto mb-4">
@@ -179,31 +198,40 @@ function displayPageSection({ showLoading = false, showError = false, showEmpty 
   }
 }
 
-async function deleteProduct(id) {
-    if (!confirm("Are you sure you want to delete this product?")) return;
+let deleteProductId = null;
 
-    const endpoint = `{% url 'main:delete_product_ajax' '00000000-0000-0000-0000-000000000000' %}`.replace(
-        '00000000-0000-0000-0000-000000000000',
-        id
-    );
-
-    try {
-        const response = await fetch(endpoint, {
-            method: "POST",
-        });
-
-        if (!response.ok) throw new Error("Failed to delete product");
-
-        showToast("Product deleted successfully!", "", "success");
-        // Dispatch event atau refresh data
-        document.dispatchEvent(new CustomEvent('productDeleted', { detail: id }));
-        fetchProductsFromServer();
-    } catch (err) {
-        console.error(err);
-        showToast("Failed to delete product", "", "error");
-    }
+function openDeleteModal(productId) {
+  deleteProductId = productId;
+  document.getElementById('deleteModal').classList.remove('hidden');
 }
 
+function closeDeleteModal() {
+  document.getElementById('deleteModal').classList.add('hidden');
+  deleteProductId = null;
+}
+
+document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+  if (!deleteProductId) return;
+  const endpointDelete = `{% url 'main:delete_product_ajax' '00000000-0000-0000-0000-000000000000' %}`.replace(
+        '00000000-0000-0000-0000-000000000000',
+        deleteProductId
+    );
+  try {
+      const response = await fetch(endpointDelete, {
+          method: "POST",
+      });
+
+      if (!response.ok) throw new Error("Failed to delete product");
+
+      showToast("Product deleted successfully!", "", "success");
+      fetchProductsFromServer();
+  } catch (err) {
+      console.error(err);
+      showToast("Failed to delete product", "", "error");
+  } finally {
+    closeDeleteModal();
+  }
+});
 
 // Get readable category name
 function getReadableCategoryName(categoryCode) {
@@ -236,12 +264,12 @@ function buildProductCardElement(productItem) {
 
   const editDeleteButtons = CURRENT_USER_ID && Number(CURRENT_USER_ID) === Number(productItem.user_id)
     ? `<div class ="flex flex-col md:flex-row gap-2 border-gray-200">
-            <a onclick="deleteProduct('${productItem.id}')" class="bg-red-600 text-white flex-1 order-2 md:order-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md font-medium hover:bg-red-700 transition-colors text-center" onclick='return confirm("Are you sure you want to delete this product?")'>
-                Delete
-            </a>
-            <a onclick="showModalEdit('${productItem.id}')" class="flex-1 text-center order-1 md:order-2 bg-[#2563eb] text-white px-4 py-2 rounded-md font-medium hover:bg-[#1e40af] transition-colors">
+            <button onclick="openDeleteModal('${productItem.id}')" class="flex-1 order-2 md:order-1 px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
+              Delete
+            </button>
+            <button onclick="showModalEdit('${productItem.id}')" class="flex-1 text-center order-1 md:order-2 bg-[#2563eb] text-white px-4 py-2 rounded-md font-medium hover:bg-[#1e40af] transition-colors">
                 Edit Product
-            </a>
+            </button>
         </div>`
     : '';
 
