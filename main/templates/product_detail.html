@@ -115,7 +115,7 @@ function renderProduct(product) {
     price.textContent = product.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
 }
 
-// Fetch news detail
+// Fetch product detail
 async function loadProductDetail() {
     try {
         showState('loading');
@@ -128,8 +128,8 @@ async function loadProductDetail() {
             throw new Error('Failed to fetch product detail');
         }
 
-        const newsData = await response.json();
-        renderProduct(newsData);
+        const productData = await response.json();
+        renderProduct(productData);
         showState('ready');
     } catch (error) {
         console.error('Error loading product detail:', error);

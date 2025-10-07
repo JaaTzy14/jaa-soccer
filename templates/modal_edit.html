@@ -101,13 +101,13 @@
         });
 
         if (!response.ok) {
-            throw new Error('Failed to fetch news detail');
+            throw new Error('Failed to fetch product detail');
         }
 
         const productData = await response.json();
         renderModal(productData);
     } catch (error) {
-        console.error('Error loading news detail:', error);
+        console.error('Error loading product detail:', error);
     }
 }
 
